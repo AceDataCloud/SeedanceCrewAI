@@ -257,3 +257,17 @@ def test_generation_payload_matches_the_pinned_public_contract():
     assert (
         post.call_args.args[0] == "https://api.acedata.cloud" + contract["request_path"]
     )
+
+
+@pytest.mark.parametrize("location", ["top", "nested"])
+def test_explicit_failed_state_is_terminal_without_finished_timestamp(location):
+    body = complete()
+    body["finished_at"] = None
+    if location == "top":
+        body["state"] = "failed"
+    else:
+        body["response"]["data"] = {"status": "failed"}
+    with patch("httpx.Client.post", return_value=reply(body)):
+        result = Retrieve(api_key="key").run(task_id="existing")
+    assert isinstance(result, ToolFailure)
+    assert not result.retryable

@@ -162,7 +162,12 @@ class ServiceTool(BaseTool):
 
         inspect(body if not retrieved else result)
         failed = any(errors) or any(state in FAILED for state in states)
-        if (finished and failed) or (not retrieved and failed):
+        if (
+            any(state in FAILED for state in states)
+            or body.get("error")
+            or (finished and failed)
+            or (not retrieved and failed)
+        ):
             return self._failure(resolved_id)
         if not resolved_id:
             raise ValueError(
