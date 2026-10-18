@@ -6,13 +6,20 @@ Independent native **Seedance** video tools for CrewAI. Provided by **Ace Data C
 
 ## 1. Install the correct service package
 
-Review-preview source and wheels are being prepared. **Not yet PyPI-published or listed in the official CrewAI / AMP catalog.** The source PR/release links below will name the exact reviewed version. Do not treat a repository as an official listing.
+Review-preview source and a [GitHub wheel/sdist prerelease](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0-preview.1) are available; implementation remains under review. **Not yet PyPI-published or listed in the official CrewAI / AMP catalog.** The source version below is pinned to `3b34aef8608a081a7ffd40cd5ab2d0f8091d3503`. Do not treat a repository as an official listing.
 
 ```bash
-uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@REVIEWED_COMMIT'
+uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@3b34aef8608a081a7ffd40cd5ab2d0f8091d3503'
 ```
 
-Replace REVIEWED_COMMIT with the full implementation commit SHA from this repository's reviewed PR. After verified PyPI publication the standard command will be `uv add crewai-seedance`; do not assume it works before publication. CrewAI supports Python 3.10–3.13. Intel macOS may lack its mandatory lancedb wheel; use supported Linux rather than bypassing dependencies for production.
+The pinned SHA is the version published in the review preview; inspect [source PR #1](https://github.com/AceDataCloud/SeedanceCrewAI/pull/1) before adoption. After verified PyPI publication the standard command will be `uv add crewai-seedance`; do not assume it works before publication. CrewAI supports Python 3.10–3.13. Intel macOS may lack its mandatory lancedb wheel; use supported Linux rather than bypassing dependencies for production.
+
+
+```bash
+uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0-preview.1/crewai_seedance-0.1.0-py3-none-any.whl#sha256=99293e1b3d4d74e8bd8ce264b58e673dd2157c7a26aa2f74b3791baf0f0b0c21'
+```
+
+The preview wheel was built from the same pinned source SHA. SHA256 must match; the mutable release page/tag is informational, not a trust anchor.
 
 ## 2. Register / sign in and get your own API Token
 
