@@ -1,0 +1,16 @@
+{
+  "service": "Seedance",
+  "as_of": "2026-10-18",
+  "task_id_matches": true,
+  "status": "succeeded",
+  "success": true,
+  "media_count": 1,
+  "original_cost": {
+    "amount": 1.404,
+    "currency": "credit",
+    "list_amount": 1.56
+  },
+  "new_generation_calls": 0,
+  "paid_model_calls": 0,
+  "limits": "Read-only old task, no new bill/unique-bill/playback claim; local diagnostic environment; Linux full-install CI separate."
+}

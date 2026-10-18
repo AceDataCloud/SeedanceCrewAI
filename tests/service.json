@@ -1,0 +1,28 @@
+{
+  "repo": "SeedanceCrewAI",
+  "slug": "seedance",
+  "package": "crewai-seedance",
+  "module": "seedance_crewai",
+  "generate_class": "SeedanceGenerateVideoTool",
+  "retrieve_class": "SeedanceRetrieveTaskTool",
+  "media": "video",
+  "generation_path": "/seedance/videos",
+  "task_path": "/seedance/tasks",
+  "dify_repo": "SeedanceDify",
+  "dify_sha": "06499222668b5582d730ce9b50b6465cfc44270f",
+  "contract_key": "seedance_generate_video",
+  "example_model": "doubao-seedance-2-0-mini-260615",
+  "example_input": {
+    "model": "doubao-seedance-2-0-mini-260615",
+    "content": [
+      {
+        "type": "text",
+        "text": "A calm sunrise over a mountain lake"
+      }
+    ],
+    "resolution": "480p",
+    "ratio": "16:9",
+    "generate_audio": false
+  },
+  "name": "Seedance"
+}
