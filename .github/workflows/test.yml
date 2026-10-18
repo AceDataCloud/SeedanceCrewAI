@@ -22,3 +22,8 @@ jobs:
           uv venv /tmp/service-wheel --python ${{ matrix.python }}
           uv pip install --python /tmp/service-wheel/bin/python dist/crewai_seedance-0.1.0-py3-none-any.whl
           /tmp/service-wheel/bin/python -c 'from seedance_crewai import SeedanceGenerateVideoTool, SeedanceRetrieveTaskTool; t = SeedanceRetrieveTaskTool(api_key="fixture"); assert "fixture" not in str(t.model_dump()); assert "task_id" in t.args_schema.model_fields; print("clean wheel import and schema passed")'
+      - name: Install and inspect public stable wheel
+        run: |
+          uv venv /tmp/public-service-wheel --python ${{ matrix.python }}
+          uv pip install --python /tmp/public-service-wheel/bin/python 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0/crewai_seedance-0.1.0-py3-none-any.whl#sha256=3b0f4decb7b5e85775e5461c8d433c0976f6316cbc4e4d2e202fd1d14f8ee1da'
+          /tmp/public-service-wheel/bin/python -c 'from seedance_crewai import SeedanceRetrieveTaskTool; from importlib.metadata import version; t=SeedanceRetrieveTaskTool(api_key="fixture"); assert version("crewai-seedance")=="0.1.0"; assert "fixture" not in str(t.model_dump()); assert "task_id" in t.args_schema.model_fields; print("public stable wheel full-install verified")'

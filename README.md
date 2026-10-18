@@ -4,22 +4,23 @@ Independent native **Seedance** video tools for CrewAI. Provided by **Ace Data C
 
 [简体中文](readme/README_zh_Hans.md) · [Current models and prices](https://platform.acedata.cloud/models?utm_source=github&utm_medium=referral&utm_campaign=evergreen&utm_content=seedancecrewai_readme_pricing)
 
-## 1. Install the correct service package
+## 1. Install the stable release
 
-Review-preview source and a [GitHub wheel/sdist prerelease](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0-preview.2) are available; implementation remains under review. **Not yet PyPI-published or listed in the official CrewAI / AMP catalog.** The source version below is pinned to `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe`. Do not treat a repository as an official listing.
-
-```bash
-uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@ca0135e30f90b38fd243cb4ea9e3ba7b93926afe'
-```
-
-The pinned SHA is the version published in the review preview; inspect [source PR #1](https://github.com/AceDataCloud/SeedanceCrewAI/pull/1) before adoption. After verified PyPI publication the standard command will be `uv add crewai-seedance`; do not assume it works before publication. CrewAI supports Python 3.10–3.13. Intel macOS may lack its mandatory lancedb wheel; use supported Linux rather than bypassing dependencies for production.
-
+The Ace-maintained **Seedance** native CrewAI tools are merged on main and released as **0.1.0**. This is a standalone service package. It is **not an official CrewAI/AMP catalog listing**, and no PyPI publication is claimed yet. Install the public wheel with its exact SHA256:
 
 ```bash
-uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0-preview.2/crewai_seedance-0.1.0-py3-none-any.whl#sha256=29d07b8fcab285ccb85daa5890139df05bb4c29331e0dfb7416d33bd6471ba58'
+uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0/crewai_seedance-0.1.0-py3-none-any.whl#sha256=3b0f4decb7b5e85775e5461c8d433c0976f6316cbc4e4d2e202fd1d14f8ee1da'
 ```
 
-The fixed preview.2 wheel was built from the same terminal-state-verified source `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe` used by the pinned source install. Historical preview.1 is retained unchanged. SHA256 must match; the mutable release page/tag is informational, not a trust anchor.
+Or install the exact merged source:
+
+```bash
+uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@8c5ed37d28f2110987d478ed5010df39907b929e'
+```
+
+[Stable release](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0) · [Merged source](https://github.com/AceDataCloud/SeedanceCrewAI/commit/8c5ed37d28f2110987d478ed5010df39907b929e). Tags and pages are informational; the immutable source SHA or wheel SHA256 binds the artifact. Historical previews remain unchanged and are not the recommended version. When an existing authorized PyPI publisher can publish after the shared new-project quota resets, the normal `uv add crewai-seedance` command will become available; do not assume publication before registry readback.
+
+CrewAI requires Python3.10–3.13. Complete Linux installation, tests and clean-wheel checks passed. Intel macOS may lack the mandatory lancedb wheel; use a supported Linux environment instead of skipping dependencies for production.
 
 ## 2. Register / sign in and get your own API Token
 
@@ -119,5 +120,3 @@ The code is free; media generation and the LLM you configure have their current 
 Provided prompts/references and the consumer Token are sent to `api.acedata.cloud` over HTTPS. The package adds no telemetry or tracing; CrewAI/your LLM may have separate settings. [Privacy](PRIVACY.md). [Source](https://github.com/AceDataCloud/SeedanceCrewAI) · [Issues](https://github.com/AceDataCloud/SeedanceCrewAI/issues) · dev@acedata.cloud
 
 Development: `uv sync --group dev`, `uv run pytest`, `uv run ruff check .`, `uv build`. Paid HTTP is mocked in tests; native Agent/Task/Crew cycles use a deterministic local model fixture. See `tests/contract-source.json` for immutable service contract provenance and `tests/live-readonly-evidence.json` when an old-task check is available. No new paid request runs in CI.
-
-The pinned source and preview.2 include explicit failed-state handling before finished_at. Historical preview.1 remains unchanged; use the pinned fixed version above.

@@ -2,24 +2,25 @@
 
 Independent native **Seedance** video tools for CrewAI. Provided by **Ace Data Cloud**, not an official Seedance or CrewAI product. This is a standalone service package; no all-services bundle or generic provider setup is required.
 
-[简体中文](https://github.com/AceDataCloud/SeedanceCrewAI/blob/322302879cf59f0e16e5f743fb5a1c76f90636dd/readme/README_zh_Hans.md) · [Current models and prices](https://platform.acedata.cloud/models?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=seedancecrewai_package_pricing)
+[简体中文](https://github.com/AceDataCloud/SeedanceCrewAI/blob/8c5ed37d28f2110987d478ed5010df39907b929e/readme/README_zh_Hans.md) · [Current models and prices](https://platform.acedata.cloud/models?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=seedancecrewai_package_pricing)
 
-## 1. Install the correct service package
+## 1. Install the stable release
 
-Review-preview source and a [GitHub wheel/sdist prerelease](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0-preview.2) are available; implementation remains under review. **Not yet PyPI-published or listed in the official CrewAI / AMP catalog.** The source version below is pinned to `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe`. Do not treat a repository as an official listing.
-
-```bash
-uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@ca0135e30f90b38fd243cb4ea9e3ba7b93926afe'
-```
-
-The pinned SHA is the version published in the review preview; inspect [source PR #1](https://github.com/AceDataCloud/SeedanceCrewAI/pull/1) before adoption. After verified PyPI publication the standard command will be `uv add crewai-seedance`; do not assume it works before publication. CrewAI supports Python 3.10–3.13. Intel macOS may lack its mandatory lancedb wheel; use supported Linux rather than bypassing dependencies for production.
-
+The Ace-maintained **Seedance** native CrewAI tools are merged on main and released as **0.1.0**. This is a standalone service package. It is **not an official CrewAI/AMP catalog listing**, and no PyPI publication is claimed yet. Install the public wheel with its exact SHA256:
 
 ```bash
-uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0-preview.2/crewai_seedance-0.1.0-py3-none-any.whl#sha256=29d07b8fcab285ccb85daa5890139df05bb4c29331e0dfb7416d33bd6471ba58'
+uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0/crewai_seedance-0.1.0-py3-none-any.whl#sha256=3b0f4decb7b5e85775e5461c8d433c0976f6316cbc4e4d2e202fd1d14f8ee1da'
 ```
 
-The fixed preview.2 wheel was built from the same terminal-state-verified source `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe` used by the pinned source install. Historical preview.1 is retained unchanged. SHA256 must match; the mutable release page/tag is informational, not a trust anchor.
+Or install the exact merged source:
+
+```bash
+uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@8c5ed37d28f2110987d478ed5010df39907b929e'
+```
+
+[Stable release](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0) · [Merged source](https://github.com/AceDataCloud/SeedanceCrewAI/commit/8c5ed37d28f2110987d478ed5010df39907b929e). Tags and pages are informational; the immutable source SHA or wheel SHA256 binds the artifact. Historical previews remain unchanged and are not the recommended version. When an existing authorized PyPI publisher can publish after the shared new-project quota resets, the normal `uv add crewai-seedance` command will become available; do not assume publication before registry readback.
+
+CrewAI requires Python3.10–3.13. Complete Linux installation, tests and clean-wheel checks passed. Intel macOS may lack the mandatory lancedb wheel; use a supported Linux environment instead of skipping dependencies for production.
 
 ## 2. Register / sign in and get your own API Token
 
@@ -27,13 +28,13 @@ The fixed preview.2 wheel was built from the same terminal-state-verified source
 2. Open **General application**, check **Seedance** service access, current model price and balance. A service-specific application can only use its entitled service.
 3. Copy the selected API Key using icon **1**, or **Manage Keys** **2** → **Create** for a separate `Seedance CrewAI` key.
 
-![Copy Key or open Manage Keys; authentic screenshot with credentials redacted](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/ca0135e30f90b38fd243cb4ea9e3ba7b93926afe/assets/tutorial/get-api-key-en.png)
+![Copy Key or open Manage Keys; authentic screenshot with credentials redacted](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/8c5ed37d28f2110987d478ed5010df39907b929e/assets/tutorial/get-api-key-en.png)
 
 4. Configure expiration and usage limits only as needed. If **Allowed APIs** is enabled, include both `/seedance/videos` and `/seedance/tasks`.
 
-![Create a separate credential; historical example name](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/ca0135e30f90b38fd243cb4ea9e3ba7b93926afe/assets/tutorial/create-api-key-en.png)
+![Create a separate credential; historical example name](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/8c5ed37d28f2110987d478ed5010df39907b929e/assets/tutorial/create-api-key-en.png)
 
-Historical authentic Ace screenshots reused unchanged from SunoDify commit `8d3d03570e73324220f111f7fe343da0792a8071`, retrieved 2026-10-18. The second image's old name `Dify tutorial` is an example only: use `Seedance CrewAI`. No visible real credential is included; [image sources](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/ca0135e30f90b38fd243cb4ea9e3ba7b93926afe/assets/tutorial/source.json).
+Historical authentic Ace screenshots reused unchanged from SunoDify commit `8d3d03570e73324220f111f7fe343da0792a8071`, retrieved 2026-10-18. The second image's old name `Dify tutorial` is an example only: use `Seedance CrewAI`. No visible real credential is included; [image sources](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/8c5ed37d28f2110987d478ed5010df39907b929e/assets/tutorial/source.json).
 
 Set the raw consumer Token in environment variable `ACEDATACLOUD_API_KEY` through secure terminal input or a secret manager. It is not a `platform-...` management Token and must not include `Bearer `, spaces or quotation marks. Never place it in prompts, screenshots, committed `.env` or workflow exports. `api_key=...` may be supplied from secure credential storage and is excluded from serialization.
 
@@ -98,7 +99,7 @@ The query is `POST /seedance/tasks` with `action=retrieve,id=...`. A completed r
 
 ## 5. Inspect execution and output
 
-![Official historical CrewAI execution trace; not this service or Ace runtime evidence](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/ca0135e30f90b38fd243cb4ea9e3ba7b93926afe/assets/tutorial/official-crewai-tracing.png)
+![Official historical CrewAI execution trace; not this service or Ace runtime evidence](https://raw.githubusercontent.com/AceDataCloud/SeedanceCrewAI/8c5ed37d28f2110987d478ed5010df39907b929e/assets/tutorial/official-crewai-tracing.png)
 
 Official [CrewAI tracing reference](https://docs.crewai.com/en/observability/tracing), historical date marker 10/1/2025, capture version unspecified; retrieved 2026-10-18. Left: task and tool timeline; right: expanded Response output, not input. **Not this package running, not an Ace task and not a promised new GUI.** Trace account/auth/consent is optional and not enabled by this package. For your actual run inspect the named tool and its returned terminal fields; never expose Token or private media URLs in screenshots.
 
@@ -116,8 +117,6 @@ Official [CrewAI tracing reference](https://docs.crewai.com/en/observability/tra
 
 The code is free; media generation and the LLM you configure have their current prices. No payment handler, fallback or automatic paid HTTP retry is added. Original Credits cost follows the API's current package/account rate and discounts; this package does not hard-code USD conversion. No install/CI count is presented as users or revenue.
 
-Provided prompts/references and the consumer Token are sent to `api.acedata.cloud` over HTTPS. The package adds no telemetry or tracing; CrewAI/your LLM may have separate settings. [Privacy](https://github.com/AceDataCloud/SeedanceCrewAI/blob/322302879cf59f0e16e5f743fb5a1c76f90636dd/PRIVACY.md). [Source](https://github.com/AceDataCloud/SeedanceCrewAI) · [Issues](https://github.com/AceDataCloud/SeedanceCrewAI/issues) · dev@acedata.cloud
+Provided prompts/references and the consumer Token are sent to `api.acedata.cloud` over HTTPS. The package adds no telemetry or tracing; CrewAI/your LLM may have separate settings. [Privacy](https://github.com/AceDataCloud/SeedanceCrewAI/blob/8c5ed37d28f2110987d478ed5010df39907b929e/PRIVACY.md). [Source](https://github.com/AceDataCloud/SeedanceCrewAI) · [Issues](https://github.com/AceDataCloud/SeedanceCrewAI/issues) · dev@acedata.cloud
 
 Development: `uv sync --group dev`, `uv run pytest`, `uv run ruff check .`, `uv build`. Paid HTTP is mocked in tests; native Agent/Task/Crew cycles use a deterministic local model fixture. See `tests/contract-source.json` for immutable service contract provenance and `tests/live-readonly-evidence.json` when an old-task check is available. No new paid request runs in CI.
-
-The pinned source and preview.2 include explicit failed-state handling before finished_at. Historical preview.1 remains unchanged; use the pinned fixed version above.
