@@ -6,7 +6,7 @@ Independent native **Seedance** video tools for CrewAI. Provided by **Ace Data C
 
 ## 1. Install the correct service package
 
-Review-preview source and a [GitHub wheel/sdist prerelease](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0-preview.1) are available; implementation remains under review. **Not yet PyPI-published or listed in the official CrewAI / AMP catalog.** The source version below is pinned to `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe`. Do not treat a repository as an official listing.
+Review-preview source and a [GitHub wheel/sdist prerelease](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0-preview.2) are available; implementation remains under review. **Not yet PyPI-published or listed in the official CrewAI / AMP catalog.** The source version below is pinned to `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe`. Do not treat a repository as an official listing.
 
 ```bash
 uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@ca0135e30f90b38fd243cb4ea9e3ba7b93926afe'
@@ -16,10 +16,10 @@ The pinned SHA is the version published in the review preview; inspect [source P
 
 
 ```bash
-uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0-preview.1/crewai_seedance-0.1.0-py3-none-any.whl#sha256=99293e1b3d4d74e8bd8ce264b58e673dd2157c7a26aa2f74b3791baf0f0b0c21'
+uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0-preview.2/crewai_seedance-0.1.0-py3-none-any.whl#sha256=29d07b8fcab285ccb85daa5890139df05bb4c29331e0dfb7416d33bd6471ba58'
 ```
 
-The immutable preview.1 wheel was built from original source `3b34aef8608a081a7ffd40cd5ab2d0f8091d3503`. The recommended source install above points to the newer terminal-state fix `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe`; these are separate artifacts. SHA256 must match; the mutable release page/tag is informational, not a trust anchor.
+The fixed preview.2 wheel was built from the same terminal-state-verified source `ca0135e30f90b38fd243cb4ea9e3ba7b93926afe` used by the pinned source install. Historical preview.1 is retained unchanged. SHA256 must match; the mutable release page/tag is informational, not a trust anchor.
 
 ## 2. Register / sign in and get your own API Token
 
@@ -76,7 +76,7 @@ parameters = {
     ],
     "resolution": "480p",
     "ratio": "16:9",
-    "generate_audio": false
+    "generate_audio": False
 }
 # BILLABLE when executed; approve the current model and budget first.
 submitted = SeedanceGenerateVideoTool().run(**parameters)
@@ -120,4 +120,4 @@ Provided prompts/references and the consumer Token are sent to `api.acedata.clou
 
 Development: `uv sync --group dev`, `uv run pytest`, `uv run ruff check .`, `uv build`. Paid HTTP is mocked in tests; native Agent/Task/Crew cycles use a deterministic local model fixture. See `tests/contract-source.json` for immutable service contract provenance and `tests/live-readonly-evidence.json` when an old-task check is available. No new paid request runs in CI.
 
-Latest source includes explicit failed-state handling before finished_at; older preview.1 is retained as an immutable historical artifact. Prefer the pinned current source for this fix.
+The pinned source and preview.2 include explicit failed-state handling before finished_at. Historical preview.1 remains unchanged; use the pinned fixed version above.
