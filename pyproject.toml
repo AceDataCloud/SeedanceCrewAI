@@ -13,7 +13,7 @@ Homepage = "https://github.com/AceDataCloud/SeedanceCrewAI"
 Repository = "https://github.com/AceDataCloud/SeedanceCrewAI"
 Issues = "https://github.com/AceDataCloud/SeedanceCrewAI/issues"
 [dependency-groups]
-dev = ["pytest>=8,<10", "ruff==0.15.1", "build>=1,<2"]
+dev = ["pytest>=8,<10", "ruff==0.15.1", "build>=1,<2", "jsonschema>=4.23,<5"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

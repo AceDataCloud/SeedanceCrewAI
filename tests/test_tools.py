@@ -9,6 +9,7 @@ from unittest.mock import patch
 import httpx
 import pytest
 from crewai.tools.tool_failure import ToolFailure
+from jsonschema import Draft202012Validator
 
 S = json.loads(Path(__file__).with_name("service.json").read_text())
 module = importlib.import_module(S["module"])
@@ -246,3 +247,13 @@ def test_unknown_cross_service_fields_are_rejected():
         with pytest.raises(ValueError):
             Generate(api_key="key").run(**values)
     post.assert_not_called()
+
+
+def test_generation_payload_matches_the_pinned_public_contract():
+    contract = json.loads(Path(__file__).with_name("contract-source.json").read_text())
+    with patch("httpx.Client.post", return_value=reply({"task_id": "new"})) as post:
+        Generate(api_key="key").run(**S["example_input"])
+    Draft202012Validator(contract["generation"]).validate(post.call_args.kwargs["json"])
+    assert (
+        post.call_args.args[0] == "https://api.acedata.cloud" + contract["request_path"]
+    )
