@@ -2,22 +2,23 @@
 
 由 **Ace Data Cloud** 提供，不是 Seedance 或 CrewAI 官方产品。独立品牌工具包，不是通用服务合集。[English](../README.md)
 
-## 安装
+## 安装正式版本
 
-已有[GitHub预览wheel/sdist](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0-preview.2)，源码仍在审阅；尚未PyPI发布、尚未进入CrewAI官方Tools/AMP目录。先检查[源码PR](https://github.com/AceDataCloud/SeedanceCrewAI/pulls)，用审阅后的固定完整SHA安装，不把仓库或本地导入当官方收录：
-
-```bash
-uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@ca0135e30f90b38fd243cb4ea9e3ba7b93926afe'
-```
-
-正式PyPI发布后目标为 `uv add crewai-seedance`，目前不要假设可用。Python3.10–3.13；Intel macOS可能缺CrewAI强制依赖lancedb wheel，正式使用选择受支持Linux，不跳依赖伪装正常安装。
-
+Ace维护的独立 **Seedance** CrewAI原生工具已合并main并发布 **0.1.0**。这不是CrewAI/AMP官方目录收录，PyPI尚未发布；先用公开wheel并校验固定SHA256：
 
 ```bash
-uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0-preview.2/crewai_seedance-0.1.0-py3-none-any.whl#sha256=29d07b8fcab285ccb85daa5890139df05bb4c29331e0dfb7416d33bd6471ba58'
+uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0/crewai_seedance-0.1.0-py3-none-any.whl#sha256=3b0f4decb7b5e85775e5461c8d433c0976f6316cbc4e4d2e202fd1d14f8ee1da'
 ```
 
-修复版preview.2 wheel与上方固定源码来自同一终态修复SHA ca0135e30f90b38fd243cb4ea9e3ba7b93926afe，历史preview.1保留不变，URL强制SHA256校验；若附件被替换必须摘要失败。release页面/tag仅提供信息，不作信任锚。
+或安装合并后的固定源码：
+
+```bash
+uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@8c5ed37d28f2110987d478ed5010df39907b929e'
+```
+
+[正式发行](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0) · [合并源码](https://github.com/AceDataCloud/SeedanceCrewAI/commit/8c5ed37d28f2110987d478ed5010df39907b929e)。tag/页面只提供信息，源码SHA或wheel摘要才绑定实际字节。旧preview保留不变，不再推荐。共享PyPI新建项目配额恢复、现有发布身份成功上传并registry读回后，才可使用普通 `uv add crewai-seedance`，目前不冒称可用。
+
+Python3.10–3.13。Linux完整依赖/测试/干净wheel已通过；Intel macOS可能缺lancedb wheel，正式使用选择支持Linux，不跳依赖冒充完整安装。
 
 ## 注册登录、General application和专用Token
 
@@ -114,5 +115,3 @@ uv run python examples/query_existing.py YOUR_EXISTING_TASK_ID
 代码免费，媒体与配置的LLM按当前价格计费；无支付处理器/自动收费重试/fallback。原Credits费用按当前应用套餐折扣，不硬编码旧美元换算。不把安装/测试数当注册或收入。prompt/参考素材与Token仅发往api.acedata.cloud；本包无追踪，CrewAI/LLM设置另算。[隐私](../PRIVACY.md) · [源码](https://github.com/AceDataCloud/SeedanceCrewAI) · [反馈](https://github.com/AceDataCloud/SeedanceCrewAI/issues) · dev@acedata.cloud
 
 开发：uv sync --group dev；uv run pytest；uv run ruff check .；uv build。测试Mock收费HTTP，真实Agent/Task/Crew使用本地确定性模型，不冒充真实AI决策。合同固定来源见tests/contract-source.json。
-
-当前固定源码及preview.2均已修正finished_at写入前的明确失败判断；旧preview.1保留不变，请使用上方固定修复版。
