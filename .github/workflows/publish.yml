@@ -1,0 +1,95 @@
+name: Publish release assets to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing stable GitHub release tag
+        required: true
+        default: v0.1.0
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    env:
+      PACKAGE_NAME: crewai-seedance
+      RELEASE_TAG: ${{ inputs.release_tag }}
+    steps:
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Download and verify existing release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import email.parser, hashlib, io, json, os, pathlib, re, tarfile, urllib.parse, urllib.request, zipfile
+
+          package = os.environ['PACKAGE_NAME']
+          tag = os.environ['RELEASE_TAG']
+          if not re.fullmatch(r'v\d+\.\d+\.\d+', tag):
+              raise SystemExit('Select a stable vMAJOR.MINOR.PATCH release')
+          version = tag[1:]
+          endpoint = 'https://api.github.com/repos/' + os.environ['GITHUB_REPOSITORY'] + '/releases/tags/' + urllib.parse.quote(tag, safe='')
+          request = urllib.request.Request(endpoint, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
+          release = json.load(urllib.request.urlopen(request, timeout=30))
+          assert not release['draft'] and not release['prerelease'], 'Release must be published and stable'
+          assets = [a for a in release['assets'] if a['name'].endswith(('.whl', '.tar.gz'))]
+          assert len(assets) == 2 and sum(a['name'].endswith('.whl') for a in assets) == 1, 'Expected one wheel and one sdist'
+          pathlib.Path('dist').mkdir()
+          receipt = {'package': package, 'version': version, 'files': {}}
+          for asset in assets:
+              name = asset['name']
+              assert '/' not in name and '\\' not in name and name.startswith(package.replace('-', '_') + '-' + version), 'Unexpected distribution filename'
+              content = urllib.request.urlopen(asset['browser_download_url'], timeout=60).read()
+              digest = hashlib.sha256(content).hexdigest()
+              assert asset['digest'] == 'sha256:' + digest, 'GitHub release digest mismatch'
+              if name.endswith('.whl'):
+                  archive = zipfile.ZipFile(io.BytesIO(content))
+                  metadata_path, = [p for p in archive.namelist() if p.endswith('.dist-info/METADATA')]
+                  metadata = archive.read(metadata_path)
+              else:
+                  archive = tarfile.open(fileobj=io.BytesIO(content))
+                  metadata_path, = [p for p in archive.getnames() if p.count('/') == 1 and p.endswith('/PKG-INFO')]
+                  metadata = archive.extractfile(metadata_path).read()
+              parsed = email.parser.BytesParser().parsebytes(metadata)
+              assert re.sub(r'[-_.]+', '-', parsed['Name']).lower() == package and parsed['Version'] == version, 'Distribution name/version mismatch'
+              pathlib.Path('dist', name).write_bytes(content)
+              receipt['files'][name] = digest
+          pathlib.Path('release-assets.json').write_text(json.dumps(receipt, indent=2))
+          print(json.dumps(receipt, indent=2))
+          PY
+      - name: Validate distribution metadata
+        run: |
+          python -m pip install 'twine>=5.0,<6.1'
+          python -m twine check --strict dist/*
+      - name: Publish using the existing organization publisher
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          test -n "$TWINE_PASSWORD" || { echo 'PYPI_TOKEN is not available to this repository/environment'; exit 1; }
+          python -m twine upload --non-interactive --skip-existing dist/*
+      - name: Verify public PyPI file hashes
+        run: |
+          python - <<'PY'
+          import json, urllib.request
+          receipt = json.load(open('release-assets.json'))
+          url = 'https://pypi.org/pypi/' + receipt['package'] + '/' + receipt['version'] + '/json'
+          data = json.load(urllib.request.urlopen(url, timeout=30))
+          files = {item['filename']: item for item in data['urls']}
+          for name, digest in receipt['files'].items():
+              assert name in files and not files[name]['yanked'], 'Published file missing or yanked'
+              assert files[name]['digests']['sha256'] == digest, 'PyPI file differs from the released artifact'
+          print(url + ': all release hashes verified')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-asset-receipt
+          path: release-assets.json
