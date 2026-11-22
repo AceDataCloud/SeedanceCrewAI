@@ -4,7 +4,13 @@
 
 ## 安装正式版本
 
-Ace维护的独立 **Seedance** CrewAI原生工具已合并main并发布 **0.1.0**。这不是CrewAI/AMP官方目录收录，PyPI尚未发布；先用公开wheel并校验固定SHA256：
+Ace 维护的独立 **Seedance** CrewAI 原生工具已发布 [PyPI 0.1.0](https://pypi.org/project/crewai-seedance/0.1.0/)，可按包名安装：
+
+```bash
+uv add crewai-seedance==0.1.0
+```
+
+也可以安装同一版本的 GitHub wheel，并校验固定 SHA256：
 
 ```bash
 uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/releases/download/v0.1.0/crewai_seedance-0.1.0-py3-none-any.whl#sha256=3b0f4decb7b5e85775e5461c8d433c0976f6316cbc4e4d2e202fd1d14f8ee1da'
@@ -16,7 +22,7 @@ uv add 'crewai-seedance @ https://github.com/AceDataCloud/SeedanceCrewAI/release
 uv add 'crewai-seedance @ git+https://github.com/AceDataCloud/SeedanceCrewAI.git@8c5ed37d28f2110987d478ed5010df39907b929e'
 ```
 
-[正式发行](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0) · [合并源码](https://github.com/AceDataCloud/SeedanceCrewAI/commit/8c5ed37d28f2110987d478ed5010df39907b929e)。tag/页面只提供信息，源码SHA或wheel摘要才绑定实际字节。旧preview保留不变，不再推荐。共享PyPI新建项目配额恢复、现有发布身份成功上传并registry读回后，才可使用普通 `uv add crewai-seedance`，目前不冒称可用。
+[正式发行](https://github.com/AceDataCloud/SeedanceCrewAI/releases/tag/v0.1.0) · [合并源码](https://github.com/AceDataCloud/SeedanceCrewAI/commit/8c5ed37d28f2110987d478ed5010df39907b929e)。tag/页面只提供信息，源码SHA或wheel摘要才绑定实际字节。旧preview保留不变，不再推荐。PyPI 上的 wheel 和源码包与现有 GitHub 发行资产的 SHA256 完全一致。PyPI 发布不代表 CrewAI/AMP 官方目录已收录。
 
 Python3.10–3.13。Linux完整依赖/测试/干净wheel已通过；Intel macOS可能缺lancedb wheel，正式使用选择支持Linux，不跳依赖冒充完整安装。
 
