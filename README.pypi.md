@@ -24,7 +24,7 @@ CrewAI requires Python3.10–3.13. Complete Linux installation, tests and clean-
 
 ## 2. Register / sign in and get your own API Token
 
-1. Open [Ace Data Cloud → Applications](https://platform.acedata.cloud/console/applications?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=seedancecrewai_package_api_key); register and sign in. If needed, choose **Initialize General Application**.
+1. Open [Ace Data Cloud → Applications](https://platform.acedata.cloud/console/applications?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=seedancecrewai_package_api_key); register and sign in.
 2. Open **General application**, check **Seedance** service access, current model price and balance. A service-specific application can only use its entitled service.
 3. Copy the selected API Key using icon **1**, or **Manage Keys** **2** → **Create** for a separate `Seedance CrewAI` key.
 
